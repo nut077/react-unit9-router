@@ -4,8 +4,8 @@ import { Article, EditArticle } from '../containers'
 
 const Articles = () => (
   <Switch>
-    <Route exact path="/articles/:id" component={Article}/>
-    <Route exact path="/articles/:id/edit" component={EditArticle}/>
+    <Route exact path="/articles/:id(\d+)" component={Article}/>
+    <Route exact path="/articles/:id(\d+)/edit" component={EditArticle}/>
   </Switch>
 );
 

@@ -5,15 +5,15 @@ import { Articles, NewArticle } from '../containers'
 const Categories = () => (
   <Switch>
     <Route
-      path="/categories/:categoryId/articles/new"
+      path="/categories/:categoryId(\d+)/articles/new"
       component={NewArticle}
     />
     <Route
-      path="/categories/:categoryId/articles"
+      path="/categories/:categoryId(\d+)/articles"
       component={Articles}
     />
     <Route
-      path="/categories/:categoryId"
+      path="/categories/:categoryId(\d+)"
       render={({ match: {params: {categoryId}}}) => (
         <Redirect
           to={`/categories/${categoryId}/articles`}
