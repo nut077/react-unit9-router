@@ -62,8 +62,9 @@ export default compose(
       setArticle({...article, [name]: value});
       setDirty(true);
     },
-    onSubmit: ({ onSubmit, article }) => event => {
+    onSubmit: ({ onSubmit, article, setDirty }) => event => {
       event.preventDefault();
+      setDirty(false);
       onSubmit(article);
     }
   }),
