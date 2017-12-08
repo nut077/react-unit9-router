@@ -1,0 +1,19 @@
+{
+  "name": "react-unit9-router",
+  "version": "1.0.0",
+  "description": "react router",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently -k \"yarn run --prefix api dev\" \"yarn start --prefix client\""
+  },
+  "keywords": [
+    "react router"
+  ],
+  "author": "Nut Freedom",
+  "license": "ISC",
+  "dependencies": {
+    "client": "0.0.1",
+    "concurrently": "^3.5.0",
+    "create-react-app": "^1.4.3"
+  }
+}

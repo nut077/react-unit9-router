@@ -1,0 +1,17 @@
+yarn add global concurrently
+yarn add --dev concurrently
+
+
+#client
+yarn add --dev airbnb-prop-types
+yarn add --dev prop-types
+yarn add --dev react-scripts
+yarn add classnames
+yarn add js-cookie
+yarn add react
+yarn add react-dom
+yarn add react-router-dom
+yarn add --dev recompose
+
+yarn add --dev bootstrap@4.0.0-beta
+yarn add --dev reactstrap@next react react-dom

@@ -1,0 +1,27 @@
+{
+  "name": "react-unit9-router-client",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "airbnb-prop-types": "^2.8.1",
+    "bootstrap": "4.0.0-beta",
+    "prop-types": "^15.6.0",
+    "react-scripts": "^1.0.17",
+    "reactstrap": "^5.0.0-alpha.3",
+    "recompose": "^0.26.0"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "js-cookie": "^2.2.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-router-dom": "^4.2.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8080"
+}
