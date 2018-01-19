@@ -5,7 +5,8 @@ import {
   withState,
   withProps,
   withHandlers,
-  lifecycle
+  lifecycle,
+  flattenProp
 } from 'recompose'
 import { Nav, Pagination, PaginationItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
@@ -13,7 +14,7 @@ import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 import { withAuth } from '../lib'
 
-const Articles = ({ articles, pagination: { page, totalPages }, categoryId, auth: { getToken } }) => (
+const Articles = ({ articles, pagination: { page, totalPages }, categoryId, getToken }) => (
   <div>
     {
       getToken() && (
@@ -60,6 +61,7 @@ const Articles = ({ articles, pagination: { page, totalPages }, categoryId, auth
 
 export default compose(
   withAuth,
+  flattenProp('auth'),
   withState('articles', 'setArticles', []),
   withState('pagination', 'setPagination', {}),
   setPropTypes({

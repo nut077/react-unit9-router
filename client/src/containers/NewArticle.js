@@ -3,7 +3,8 @@ import { ArticleForm } from '../components'
 import {
   compose,
   withHandlers,
-  setPropTypes
+  setPropTypes,
+  flattenProp
 } from 'recompose'
 import { withAuth, withAuthCheck } from '../lib'
 import PropTypes from 'prop-types'
@@ -18,6 +19,7 @@ const NewArticle = ({createArticle}) => (
 
 export default compose(
   withAuth,
+  flattenProp('auth'),
   withAuthCheck,
   setPropTypes({
     match: PropTypes.shape({
@@ -34,7 +36,7 @@ export default compose(
       ({
          match: {params: {categoryId}},
          history: {push},
-         auth: {getToken}
+         getToken
        }) => article => {
         fetch('/articles', {
           method: 'POST',

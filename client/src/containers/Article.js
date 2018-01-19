@@ -5,7 +5,8 @@ import {
   withState,
   withProps,
   withHandlers,
-  lifecycle
+  lifecycle,
+  flattenProp
 } from 'recompose'
 import { Button } from 'reactstrap'
 import PropTypes from 'prop-types'
@@ -13,7 +14,7 @@ import { numericString } from 'airbnb-prop-types'
 import { withAuth } from '../lib'
 import { Link } from 'react-router-dom'
 
-const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id, auth: { getToken, getUserId } }) => (
+const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id, getToken, getUserId }) => (
   <div>
     <h2>{title}</h2>
     <p>{content}</p>
@@ -39,6 +40,7 @@ const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id,
 
 export default compose(
   withAuth,
+  flattenProp('auth'),
   setPropTypes({
     match: PropTypes.shape({
       params: PropTypes.shape({

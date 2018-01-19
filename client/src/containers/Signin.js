@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthForm } from '../components'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers, flattenProp } from 'recompose'
 import { withAuth } from '../lib'
 
 const Signin = ({ handleFormSubmit }) => (
@@ -9,8 +9,9 @@ const Signin = ({ handleFormSubmit }) => (
 
 export default compose(
   withAuth,
+  flattenProp('auth'),
   withHandlers({
-    handleFormSubmit: ({ history: {push}, auth: {setToken} }) => data => {
+    handleFormSubmit: ({ history: {push}, setToken }) => data => {
       fetch('/sessions', {
         method: 'POST',
         headers: {

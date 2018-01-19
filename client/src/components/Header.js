@@ -12,7 +12,8 @@ import {
   withStateHandlers,
   withHandlers,
   branch,
-  renderComponent
+  renderComponent,
+  flattenProp
 } from 'recompose'
 import { Link, withRouter } from 'react-router-dom'
 import { withAuth } from '../lib'
@@ -64,6 +65,7 @@ const GuestMenu = ({ isOpen, onClickOpen }) => (
 export default compose(
   withRouter,
   withAuth,
+  flattenProp('auth'),
   setPropTypes({
     history: PropTypes.shape({
       push: PropTypes.func.isRequired
@@ -80,7 +82,7 @@ export default compose(
     }
   ),
   withHandlers({
-    logout: ({ history: { push }, auth: {removeToken} }) => () => {
+    logout: ({ history: { push }, removeToken }) => () => {
       removeToken();
       push('/')
     }

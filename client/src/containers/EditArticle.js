@@ -6,7 +6,8 @@ import {
   withHandlers,
   setPropTypes,
   withProps,
-  lifecycle
+  lifecycle,
+  flattenProp
 } from 'recompose'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
@@ -22,6 +23,7 @@ const EditArticle = ({ article, editArticle }) => (
 
 export default compose(
   withAuth,
+  flattenProp('auth'),
   withAuthCheck,
   setPropTypes({
     match: PropTypes.shape({
@@ -39,7 +41,7 @@ export default compose(
   })),
   withState('article', 'setArticle', {title: '', content: ''}),
   withHandlers({
-    editArticle: ({ id, push, auth: { getToken } }) => article => {
+    editArticle: ({ id, push, getToken }) => article => {
       fetch(`/articles/${id}`, {
         method: 'PATCH',
         headers: {
