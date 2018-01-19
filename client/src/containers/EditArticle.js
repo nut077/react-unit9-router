@@ -7,7 +7,8 @@ import {
   setPropTypes,
   withProps,
   lifecycle,
-  flattenProp
+  flattenProp,
+  onlyUpdateForKeys
 } from 'recompose'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
@@ -37,17 +38,18 @@ export default compose(
   }),
   withProps(props => ({
     id: props.match.params.id,
-    push: props.history.push
+    push: props.history.push,
+    accessToken: props.auth.getToken()
   })),
   withState('article', 'setArticle', {title: '', content: ''}),
   withHandlers({
-    editArticle: ({ id, push, getToken }) => article => {
+    editArticle: ({ id, push, accessToken }) => article => {
       fetch(`/articles/${id}`, {
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': getToken()
+          'Authorization': accessToken
         },
         body: JSON.stringify({
           ...article
@@ -65,5 +67,6 @@ export default compose(
     componentDidMount() {
       this.props.loadArticle()
     }
-  })
+  }),
+  onlyUpdateForKeys(['accessToken', 'article'])
 )(EditArticle)
