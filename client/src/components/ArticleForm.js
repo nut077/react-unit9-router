@@ -6,7 +6,8 @@ import {
   setPropTypes,
   withState,
   withHandlers,
-  lifecycle
+  lifecycle,
+  pure
 } from 'recompose'
 import {
   Form,
@@ -75,5 +76,6 @@ export default compose(
         setArticle({title, content});
       }
     }
-  })
+  }),
+  pure
 )(ArticleForm)
