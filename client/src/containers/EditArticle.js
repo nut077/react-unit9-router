@@ -10,7 +10,7 @@ import {
 } from 'recompose'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
-import { Auth } from '../lib'
+import { withAuth, withAuthCheck } from '../lib'
 
 const EditArticle = ({ article, editArticle }) => (
   <ArticleForm
@@ -21,6 +21,8 @@ const EditArticle = ({ article, editArticle }) => (
 );
 
 export default compose(
+  withAuth,
+  withAuthCheck,
   setPropTypes({
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -37,13 +39,13 @@ export default compose(
   })),
   withState('article', 'setArticle', {title: '', content: ''}),
   withHandlers({
-    editArticle: ({ id, push }) => article => {
+    editArticle: ({ id, push, auth: { getToken } }) => article => {
       fetch(`/articles/${id}`, {
         method: 'PATCH',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': Auth.getToken()
+          'Authorization': getToken()
         },
         body: JSON.stringify({
           ...article

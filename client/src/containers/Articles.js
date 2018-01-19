@@ -11,12 +11,12 @@ import { Nav, Pagination, PaginationItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
-import { Auth } from '../lib'
+import { withAuth } from '../lib'
 
-const Articles = ({ articles, pagination: { page, totalPages }, categoryId }) => (
+const Articles = ({ articles, pagination: { page, totalPages }, categoryId, auth: { getToken } }) => (
   <div>
     {
-      Auth.getToken() && (
+      getToken() && (
         <Link
           to={`/categories/${categoryId}/articles/new`}
           className='btn btn-sm btn-secondary'
@@ -59,6 +59,7 @@ const Articles = ({ articles, pagination: { page, totalPages }, categoryId }) =>
 );
 
 export default compose(
+  withAuth,
   withState('articles', 'setArticles', []),
   withState('pagination', 'setPagination', {}),
   setPropTypes({

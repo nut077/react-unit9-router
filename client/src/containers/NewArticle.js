@@ -5,7 +5,7 @@ import {
   withHandlers,
   setPropTypes
 } from 'recompose'
-import { Auth } from '../lib'
+import { withAuth, withAuthCheck } from '../lib'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
 
@@ -17,6 +17,8 @@ const NewArticle = ({createArticle}) => (
 );
 
 export default compose(
+  withAuth,
+  withAuthCheck,
   setPropTypes({
     match: PropTypes.shape({
       params: PropTypes.shape({
@@ -31,21 +33,22 @@ export default compose(
     createArticle:
       ({
          match: {params: {categoryId}},
-         history: {push}
+         history: {push},
+         auth: {getToken}
        }) => article => {
         fetch('/articles', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': Auth.getToken()
+            'Authorization': getToken()
           },
           body: JSON.stringify({
             ...article,
             categoryId: categoryId
           })
         }).then(res => res.json())
-          .then(({ article: {id}}) => push(`/articles/${id}`))
+          .then(({article: {id}}) => push(`/articles/${id}`))
       }
   })
 )(NewArticle)

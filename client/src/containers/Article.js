@@ -10,10 +10,10 @@ import {
 import { Button } from 'reactstrap'
 import PropTypes from 'prop-types'
 import { numericString } from 'airbnb-prop-types'
-import { Auth } from '../lib'
+import { withAuth } from '../lib'
 import { Link } from 'react-router-dom'
 
-const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id }) => (
+const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id, auth: { getToken, getUserId } }) => (
   <div>
     <h2>{title}</h2>
     <p>{content}</p>
@@ -25,7 +25,7 @@ const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id 
       Back
     </Button>&nbsp;
     {
-      (Auth.getToken() && Number(Auth.getUserId()) === authorId) && (
+      (getToken() && Number(getUserId()) === authorId) && (
         <Link
           to={`/articles/${id}/edit`}
           className="btn btn-sm btn-secondary"
@@ -38,6 +38,7 @@ const Article = ({ article: { title, content, authorId }, backToPreviousUrl, id 
 );
 
 export default compose(
+  withAuth,
   setPropTypes({
     match: PropTypes.shape({
       params: PropTypes.shape({

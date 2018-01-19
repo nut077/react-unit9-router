@@ -1,15 +1,16 @@
 import React from 'react'
 import { AuthForm } from '../components'
 import { compose, withHandlers } from 'recompose'
-import { Auth } from '../lib'
+import { withAuth } from '../lib'
 
 const Signup = ({ handleFormSubmit }) => (
   <AuthForm formName="Signup" onSubmit={handleFormSubmit} />
 );
 
 export default compose(
+  withAuth,
   withHandlers({
-    handleFormSubmit: ({ history: { push }}) => data => {
+    handleFormSubmit: ({ history: {push}, auth: {setToken} }) => data => {
       fetch('/users', {
         method: 'POST',
         headers: {
@@ -17,7 +18,7 @@ export default compose(
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      }).then(({ headers }) => Auth.setToken(headers))
+      }).then(({ headers }) => setToken(headers))
         .then(() => push('/'))
     }
   })

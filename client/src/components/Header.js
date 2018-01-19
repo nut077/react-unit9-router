@@ -15,7 +15,7 @@ import {
   renderComponent
 } from 'recompose'
 import { Link, withRouter } from 'react-router-dom'
-import { Auth } from '../lib'
+import { withAuth } from '../lib'
 import PropTypes from 'prop-types'
 
 const pointer = {
@@ -29,13 +29,13 @@ const MainMenu = ({ children }) => (
 </Navbar>
 );
 
-const UserMenu = ({ isOpen, onClickOpen, logout }) => (
+const UserMenu = ({ isOpen, onClickOpen, logout, auth: {getUser} }) => (
   <MainMenu>
     <NavbarToggler onClick={onClickOpen}/>
     <Collapse isOpen={isOpen} navbar>
       <Nav className="ml-auto" navbar>
         <NavItem>
-          <a className="nav-link" style={pointer} >{Auth.getUser()}</a>
+          <a className="nav-link" style={pointer} >{getUser()}</a>
         </NavItem>
         <NavItem>
           <a className="nav-link" onClick={logout} style={pointer} >logout</a>
@@ -63,6 +63,7 @@ const GuestMenu = ({ isOpen, onClickOpen }) => (
 
 export default compose(
   withRouter,
+  withAuth,
   setPropTypes({
     history: PropTypes.shape({
       push: PropTypes.func.isRequired
@@ -79,13 +80,13 @@ export default compose(
     }
   ),
   withHandlers({
-    logout: ({ history: { push }}) => () => {
-      Auth.removeToken();
+    logout: ({ history: { push }, auth: {removeToken} }) => () => {
+      removeToken();
       push('/')
     }
   }),
   branch(
-    () => Auth.getToken(),
+    ({ auth: {getToken} }) => getToken(),
     renderComponent(UserMenu),
     renderComponent(GuestMenu)
   )

@@ -1,15 +1,16 @@
 import React from 'react'
 import { AuthForm } from '../components'
 import { compose, withHandlers } from 'recompose'
-import { Auth } from '../lib'
+import { withAuth } from '../lib'
 
 const Signin = ({ handleFormSubmit }) => (
   <AuthForm formName="Signin" onSubmit={handleFormSubmit} />
 );
 
 export default compose(
+  withAuth,
   withHandlers({
-    handleFormSubmit: ({ history: { push }}) => data => {
+    handleFormSubmit: ({ history: {push}, auth: {setToken} }) => data => {
       fetch('/sessions', {
         method: 'POST',
         headers: {
@@ -18,7 +19,7 @@ export default compose(
         },
         body: JSON.stringify(data)
       }).then(({ headers }) => {
-        Auth.setToken(headers);
+        setToken(headers);
         return !!headers.get('Authorization') ? '/' : '/sign-in'
       }).then(path => {
         push(path);
